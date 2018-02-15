@@ -24,15 +24,32 @@ app.get('*', (req, res) => {
 });
 
 /**
+ * Create HTTP server.
+ */
+const server = http.createServer(app);
+
+var io = require('socket.io')(server);
+io.on('connection', function(client) {
+    console.log("Connected to Socket!!"+ client.id);
+
+    client.on('disconnect', function() {
+        console.log("disconnected")
+    });
+    client.on('joinRoom', function(roomId) {
+        client.join(roomId);
+        console.log(' Client '+roomId+' joined the room and client id is '+ client.id);
+    });
+     client.on('toBackEnd', function(roomId) {
+        io.in(roomId).emit('toFrontEnd', 'AAAAAAAAA');
+    })
+});
+
+/**
  * Get port from environment and store in Express.
  */
 const port = process.env.PORT || '3000';
 app.set('port', port);
 
-/**
- * Create HTTP server.
- */
-const server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
