@@ -5,7 +5,7 @@ const http = require('http');
 const bodyParser = require('body-parser');
 
 const api = require('./server/routes/api');
-const Bot = require('./server/controllers/Bot');
+const Socket = require('./server/controllers/Socket');
 
 const app = express();
 
@@ -24,30 +24,13 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-/**
- * Create HTTP server.
- */
+// Create http server
 const server = http.createServer(app);
 
 var io = require('socket.io')(server);
-io.on('connection', function(client) {
-    console.log("Connected to Socket!!"+ client.id);
 
-    client.on('disconnect', function() {
-        console.log("disconnected")
-    });
-    client.on('joinRoom', function(data) {
-        client.join(data.roomId);
-        console.log(' Client '+data.roomId+' joined the room and client id is '+ client.id);
-    });
-     client.on('sendUserMessage', function(data) {
-         io.in(data.roomId).emit('newMessage', {'message':data.message, 'sender':'user'});
-         var botMessage = Bot.getBotMessage();
-         setTimeout(function () {
-             io.in(data.roomId).emit('newMessage', {'message':botMessage.message, 'sender':'bot'});
-         }, 300);
-    });
-});
+//Socket.io connections and todo's
+Socket.handleSocket(io);
 
 /**
  * Get port from environment and store in Express.

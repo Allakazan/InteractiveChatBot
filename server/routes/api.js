@@ -7,4 +7,9 @@ router.get('/', (req, res) => {
     res.send('api works');
 });
 
+router.get('/socket', (req, res) => {
+    //req.connection.remoteAddress
+    res.send('socket works');
+});
+
 module.exports = router;
