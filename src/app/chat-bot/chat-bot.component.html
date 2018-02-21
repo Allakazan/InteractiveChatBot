@@ -12,12 +12,9 @@
                     </div>
                 </div>
                 <div class="panel-body msg_container_base">
-                    <div *ngFor="let message of messages" class="row msg_container base_{{message.sender == 'user' ? 'receive' : 'sent'}}">
-                        <div class="col-md-2 col-xs-2 avatar" >
-                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
-                        </div>
+                    <div *ngFor="let message of messages" class="row msg_container base_{{message.sender == 'user' ? 'sent' : 'receive'}}">
                         <div class="col-md-10 col-xs-10">
-                            <div class="messages msg_{{message.sender == 'user' ? 'receive' : 'sent'}}">
+                            <div class="messages msg_{{message.sender == 'user' ? 'sent' : 'receive'}}">
                                 <p>{{message.message}}</p>
                                 <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
                             </div>
@@ -28,7 +25,7 @@
                     <div class="input-group">
                         <input [(ngModel)]="userInput" (keyup.enter)="sendMessage()" id="btn-input" type="text" class="form-control input-sm chat_input" placeholder="Write your message here..." autofocus/>
                         <span class="input-group-btn">
-                        <button class="btn btn-primary btn-sm" id="btn-chat">Send</button>
+                        <button (click)="sendMessage()" class="btn btn-primary btn-sm" id="btn-chat">Send</button>
                         </span>
                     </div>
                 </div>
