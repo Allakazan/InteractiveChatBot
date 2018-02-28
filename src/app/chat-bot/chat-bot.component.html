@@ -22,10 +22,18 @@
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <div class="input-group">
-                        <input [(ngModel)]="userInput" (keyup.enter)="sendMessage()" id="btn-input" type="text" class="form-control input-sm chat_input" placeholder="Write your message here..." autofocus/>
+                    <div class="emoji-wrapper input-group">
+                        <emoji-input
+                                [inputClass]="'form-control input-sm chat_input'"
+                                [searchClass]="'emoji-search-custom'"
+                                [popupAnchor]="'bottom'"
+                                [(model)]="userInput"
+                                [onEnter]="sendMessage.bind(this)"
+                                [autofocus]="true"
+                                (setPopupAction)="setPopupAction($event)">
+                        </emoji-input>
                         <span class="input-group-btn">
-                        <button (click)="sendMessage()" class="btn btn-primary btn-sm" id="btn-chat">Send</button>
+                            <div class="emoji-search-button" id="btn-chat" (click)="emojiPopupAction()"></div>
                         </span>
                     </div>
                 </div>

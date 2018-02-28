@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import {EmojiPickerModule} from 'ng-emoji-picker';
+
 import { AppComponent } from './app.component';
 import { ChatBotComponent } from './chat-bot/chat-bot.component';
 
@@ -14,7 +16,8 @@ import { ChatBotComponent } from './chat-bot/chat-bot.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    EmojiPickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

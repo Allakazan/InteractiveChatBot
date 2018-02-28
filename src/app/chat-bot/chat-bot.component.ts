@@ -6,15 +6,19 @@ import { Message } from '../models/Message';
 @Component({
   selector: 'app-chat-bot',
   templateUrl: './chat-bot.component.html',
-  styleUrls: ['./chat-bot.component.css']
+  styleUrls: ['./chat-bot.component.css'],
+  host: {
+      '(document:click)': 'onDocumentClick($event)',
+  },
 })
 export class ChatBotComponent implements OnInit {
 
     userInput: string = '';
     messages: Message[] = [];
+    emojiPopupAction : Function;
 
     private url = 'http://localhost:3000';
-    private socket;
+    public socket;
 
     constructor() { }
 
@@ -25,6 +29,18 @@ export class ChatBotComponent implements OnInit {
         this.socket.on('newMessage', (message) => {
             this.messages.push(message);
         });
+    }
+
+    onDocumentClick(ev) {
+        if(document.getElementsByClassName("emoji-search")[0].getAttribute("hidden") === null) {
+            if (ev.target.getAttribute("class") != 'emoji-search-button') {
+                this.emojiPopupAction(false);
+            }
+        }
+    }
+
+    setPopupAction(fn) {
+        this.emojiPopupAction = fn;
     }
 
     sendMessage() {
