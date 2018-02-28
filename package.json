@@ -29,7 +29,7 @@
     "socket.io-client": "^2.0.4",
     "ts-helpers": "^1.1.1",
     "underscore": "^1.8.3",
-    "watson-developer-cloud": "^3.0.7",
+    "watson-developer-cloud": "^2.40.0",
     "zone.js": "^0.8.20"
   },
   "devDependencies": {
