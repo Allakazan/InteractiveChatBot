@@ -1,3 +1,6 @@
+// Strict for use the ES2016 convention
+"use strict";
+
 // Dependencies
 const express = require('express');
 const path = require('path');
