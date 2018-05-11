@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import * as io from "socket.io-client";
+import { Component, OnInit, ElementRef, ViewChild, ViewChildren, QueryList } from '@angular/core';
+import * as io from "socket.io-client/dist/socket.io.js";
 
 import { Message } from '../models/Message';
 
@@ -20,6 +20,9 @@ export class ChatBotComponent implements OnInit {
     private url = 'http://localhost:3000';
     public socket;
 
+    @ViewChild('chatWrapper') chatWrapper:ElementRef;
+    @ViewChildren('chatMessages') chatMessages: QueryList<any>;
+
     constructor() { }
 
     ngOnInit(): void {
@@ -28,6 +31,12 @@ export class ChatBotComponent implements OnInit {
 
         this.socket.on('newMessage', (message) => {
             this.messages.push(message);
+        });
+    }
+
+    ngAfterViewInit() {
+        this.chatMessages.changes.subscribe(t => {
+            this.chatScrollBottom();
         });
     }
 
@@ -46,5 +55,10 @@ export class ChatBotComponent implements OnInit {
     sendMessage() {
         this.socket.emit('sendUserMessage', {'roomId':'user1', 'message':this.userInput});
         this.userInput = '';
+    }
+
+    chatScrollBottom() {
+        //this.chatWrapper.nativeElement.scrollTo(0, this.chatWrapper.nativeElement.scrollHeight);
+        this.chatWrapper.nativeElement.scrollTop = this.chatWrapper.nativeElement.scrollHeight;
     }
 }

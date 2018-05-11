@@ -1,4 +1,4 @@
-var Message = require("./Message");
+var MessageService = require("../services/MessageService");
 
 module.exports = class Socket {
 
@@ -14,11 +14,11 @@ module.exports = class Socket {
             client.on('joinRoom', function(data) {
                 client.join(data.roomId);
                 console.log(' Client '+data.roomId+' joined the room and client id is '+ client.id);
-                Message.sendMessage('', conversation, io, data.roomId);
+                MessageService.sendMessage('', conversation, io, data.roomId);
             });
             client.on('sendUserMessage', function(data) {
                 io.in(data.roomId).emit('newMessage', {'message':data.message, 'sender':'user'});
-                Message.sendMessage(data.message, conversation, io, data.roomId);
+                MessageService.sendMessage(data.message, conversation, io, data.roomId);
             });
         });
     }
